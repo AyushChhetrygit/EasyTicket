@@ -1,0 +1,37 @@
+[
+  {
+    "customer_id": "CUST-1001",
+    "name": "Ava Thompson",
+    "plan": "enterprise",
+    "account_status": "active",
+    "previous_tickets": 12
+  },
+  {
+    "customer_id": "CUST-1002",
+    "name": "Marcus Lee",
+    "plan": "pro",
+    "account_status": "active",
+    "previous_tickets": 3
+  },
+  {
+    "customer_id": "CUST-1003",
+    "name": "Priya Nair",
+    "plan": "free",
+    "account_status": "active",
+    "previous_tickets": 0
+  },
+  {
+    "customer_id": "CUST-1004",
+    "name": "Diego Fernandez",
+    "plan": "pro",
+    "account_status": "suspended",
+    "previous_tickets": 7
+  },
+  {
+    "customer_id": "CUST-1005",
+    "name": "Hana Kobayashi",
+    "plan": "enterprise",
+    "account_status": "active",
+    "previous_tickets": 25
+  }
+]
