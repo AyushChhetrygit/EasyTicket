@@ -1,6 +1,10 @@
 import unittest
+import time
 
-from app.workflows.ticket_analysis_workflow import analyze_ticket
+from app.workflows.ticket_analysis_workflow import (
+    TicketAnalysisWorkflowError,
+    analyze_ticket,
+)
 
 
 class TicketAnalysisWorkflowTests(unittest.IsolatedAsyncioTestCase):
@@ -15,6 +19,18 @@ class TicketAnalysisWorkflowTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(result.priority, "P1")
         self.assertEqual(result.assigned_team, "Billing Support")
         self.assertTrue(result.reason)
+
+    async def test_llm_timeout(self) -> None:
+        class SlowClassificationService:
+            def analyze_ticket(self, ticket_message, customer_info=None):
+                time.sleep(0.05)
+
+        with self.assertRaises(TicketAnalysisWorkflowError):
+            await analyze_ticket(
+                {"message": "Settings page is slow."},
+                timeout_seconds=0.001,
+                classification_service=SlowClassificationService(),
+            )
 
 
 if __name__ == "__main__":

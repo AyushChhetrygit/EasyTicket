@@ -2,7 +2,7 @@
 
 from functools import lru_cache
 
-from pydantic import Field, SecretStr, field_validator, model_validator
+from pydantic import AliasChoices, Field, SecretStr, field_validator, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -33,7 +33,7 @@ class LLMConfig(BaseSettings):
     )
     mock_ai_mode: bool = Field(
         default=True,
-        validation_alias="MOCK_AI_MODE",
+        validation_alias=AliasChoices("USE_MOCK_AI", "MOCK_AI_MODE"),
         description="When true, AI services should return deterministic mock output.",
     )
 

@@ -1,7 +1,9 @@
 import unittest
 
 from app.services.routing_service import TeamRoutingService
+from app.models.ai_schemas import RoutingResult
 from config.llm_config import LLMConfig
+from pydantic import ValidationError
 
 
 class TeamRoutingServiceTests(unittest.TestCase):
@@ -31,6 +33,16 @@ class TeamRoutingServiceTests(unittest.TestCase):
     def test_high_priority_override_routes_to_engineering(self) -> None:
         result = self.service.route_ticket("All users down.", "technical", "outage", "P0")
         self.assertEqual(result.assigned_team, "Engineering")
+
+    def test_valid_team_routing_output(self) -> None:
+        result = RoutingResult.model_validate(
+            {"assigned_team": "Technical Support", "reason": "Technical issue."}
+        )
+        self.assertEqual(result.assigned_team, "Technical Support")
+
+    def test_invalid_team_rejection(self) -> None:
+        with self.assertRaises(ValidationError):
+            RoutingResult.model_validate({"assigned_team": "Legal", "reason": "Invalid."})
 
 
 if __name__ == "__main__":

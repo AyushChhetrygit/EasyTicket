@@ -1,7 +1,9 @@
 import unittest
 
 from app.services.priority_service import PriorityEstimationService
+from app.models.ai_schemas import PriorityResult
 from config.llm_config import LLMConfig
+from pydantic import ValidationError
 
 
 class PriorityEstimationServiceTests(unittest.TestCase):
@@ -32,6 +34,14 @@ class PriorityEstimationServiceTests(unittest.TestCase):
     def test_low_impact_feature_request_is_p4(self) -> None:
         result = self.service.estimate_priority("Feature request: add a new theme.")
         self.assertEqual(result.priority, "P4")
+
+    def test_valid_priority_output(self) -> None:
+        result = PriorityResult.model_validate({"priority": "P2", "reason": "Workaround exists."})
+        self.assertEqual(result.priority, "P2")
+
+    def test_invalid_priority_rejection(self) -> None:
+        with self.assertRaises(ValidationError):
+            PriorityResult.model_validate({"priority": "P9", "reason": "Invalid."})
 
 
 if __name__ == "__main__":

@@ -10,6 +10,7 @@ from pydantic import ValidationError
 
 from app.agents.prompts.routing_prompt import ROUTING_SYSTEM_PROMPT
 from app.models.ai_schemas import RoutingResult, TicketCategory, TicketPriority
+from app.services.mock_ai_service import MockAIService
 from config.llm_config import LLMConfig, get_llm_config
 
 
@@ -22,9 +23,11 @@ class TeamRoutingService:
         self,
         client: genai.Client | None = None,
         config: LLMConfig | None = None,
+        mock_ai_service: MockAIService | None = None,
     ) -> None:
         self.config = config or get_llm_config()
         self.client = client
+        self.mock_ai_service = mock_ai_service or MockAIService()
 
     def route_ticket(
         self,
@@ -38,7 +41,7 @@ class TeamRoutingService:
             raise RoutingError("Ticket message cannot be empty.")
 
         if self.config.mock_ai_mode:
-            return self._mock_route(category, subcategory, priority)
+            return self.mock_ai_service.route_ticket(category, subcategory, priority)
 
         client = self.client or self._build_client()
         payload = {
@@ -84,37 +87,3 @@ class TeamRoutingService:
         if not response.text:
             raise RoutingError("Gemini returned an empty routing response.")
         return response.text
-
-    def _mock_route(
-        self,
-        category: TicketCategory,
-        subcategory: str,
-        priority: TicketPriority,
-    ) -> RoutingResult:
-        severe = priority == "P0" or (
-            priority == "P1" and category == "technical"
-        ) or "outage" in subcategory.lower()
-        if severe:
-            return RoutingResult(
-                assigned_team="Engineering",
-                reason="Severe bugs and outages require Engineering ownership.",
-            )
-        if category in ("billing", "refund"):
-            return RoutingResult(
-                assigned_team="Billing Support",
-                reason="Billing and refund issues route to Billing Support.",
-            )
-        if category == "account":
-            return RoutingResult(
-                assigned_team="Account Support",
-                reason="Account issues route to Account Support.",
-            )
-        if category == "feature_request":
-            return RoutingResult(
-                assigned_team="Product Team",
-                reason="Feature requests route to Product Team.",
-            )
-        return RoutingResult(
-            assigned_team="Technical Support",
-            reason="Normal technical issues route to Technical Support.",
-        )

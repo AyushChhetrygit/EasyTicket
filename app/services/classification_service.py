@@ -11,6 +11,7 @@ from pydantic import ValidationError
 
 from app.agents.prompts.classification_prompt import CLASSIFICATION_SYSTEM_PROMPT
 from app.models.ai_schemas import TicketAnalysisResult
+from app.services.mock_ai_service import MockAIService
 from config.llm_config import LLMConfig, get_llm_config
 
 
@@ -25,9 +26,11 @@ class TicketClassificationService:
         self,
         client: genai.Client | None = None,
         config: LLMConfig | None = None,
+        mock_ai_service: MockAIService | None = None,
     ) -> None:
         self.config = config or get_llm_config()
         self.client = client
+        self.mock_ai_service = mock_ai_service or MockAIService()
 
     def analyze_ticket(
         self,
@@ -39,7 +42,7 @@ class TicketClassificationService:
             raise ClassificationError("Ticket message cannot be empty.")
 
         if self.config.mock_ai_mode:
-            return self._mock_analysis(message)
+            return self.mock_ai_service.classify_ticket(message, customer_info)
 
         client = self.client or self._build_client()
         payload = {"message": message}
@@ -97,58 +100,6 @@ class TicketClassificationService:
 
     def _parse_response(self, response_text: str) -> TicketAnalysisResult:
         return TicketAnalysisResult.model_validate(json.loads(response_text))
-
-    def _mock_analysis(self, message: str) -> TicketAnalysisResult:
-        normalized = message.lower()
-
-        if any(term in normalized for term in ("payment", "invoice", "subscription")):
-            return TicketAnalysisResult(
-                category="billing",
-                subcategory="subscription_activation",
-                classification_confidence=0.92,
-                priority="P1",
-                assigned_team="Billing Support",
-                reason="The ticket describes a billing or subscription issue.",
-            )
-
-        if "refund" in normalized:
-            return TicketAnalysisResult(
-                category="refund",
-                subcategory="refund_request",
-                classification_confidence=0.88,
-                priority="P2",
-                assigned_team="Billing Support",
-                reason="The customer is requesting or considering a refund.",
-            )
-
-        if any(term in normalized for term in ("login", "access", "account")):
-            return TicketAnalysisResult(
-                category="account",
-                subcategory="account_access",
-                classification_confidence=0.84,
-                priority="P2",
-                assigned_team="Account Support",
-                reason="The ticket appears related to account access or account state.",
-            )
-
-        if any(term in normalized for term in ("feature", "request", "add")):
-            return TicketAnalysisResult(
-                category="feature_request",
-                subcategory="product_feedback",
-                classification_confidence=0.8,
-                priority="P4",
-                assigned_team="Product Team",
-                reason="The ticket asks for product capability changes.",
-            )
-
-        return TicketAnalysisResult(
-            category="technical",
-            subcategory="general_support",
-            classification_confidence=0.65,
-            priority="P3",
-            assigned_team="Technical Support",
-            reason="The ticket needs technical triage but lacks a more specific signal.",
-        )
 
     def _system_prompt(self) -> str:
         return (
