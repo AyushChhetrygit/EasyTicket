@@ -1,3 +1,8 @@
+from unittest.mock import patch
+
+from app.services import analysis_service
+
+
 def test_create_ticket(client, sample_customer):
     response = client.post("/tickets", json={
         "customer_id": sample_customer.customer_id,
@@ -75,8 +80,7 @@ def test_ticket_history(client, sample_customer):
     assert "status_changed" in actions
 
 
-def test_analyze_ticket_uses_fallback(client, sample_customer):
-    """With no AI service wired in, /analyze should use rule-based fallback and return 200."""
+def test_create_ticket_then_analyze_uses_ai_workflow(client, sample_customer):
     created = client.post("/tickets", json={
         "customer_id": sample_customer.customer_id,
         "message": "I was charged twice on my invoice this month.",
@@ -85,12 +89,17 @@ def test_analyze_ticket_uses_fallback(client, sample_customer):
     response = client.post(f"/tickets/{created['ticket_id']}/analyze")
     assert response.status_code == 200
     body = response.json()
-    # Rule-based router should classify this as billing
     assert body["category"] == "billing"
-    assert body["priority"] is not None
-    assert body["assigned_team"] is not None
+    assert body["priority"] == "high"
+    assert body["assigned_team"] == "billing_team"
     assert body["classification_confidence"] is not None
     assert body["ai_reason"] is not None
+    assert body["analysis_source"] == "ai"
+
+    saved = client.get(f"/tickets/{created['ticket_id']}").json()
+    assert saved["category"] == body["category"]
+    assert saved["priority"] == body["priority"]
+    assert saved["assigned_team"] == body["assigned_team"]
 
 
 def test_analyze_ticket_not_found(client):
@@ -111,3 +120,21 @@ def test_analyze_ticket_writes_history(client, sample_customer):
     history_resp = client.get(f"/tickets/{created['ticket_id']}/history")
     actions = [e["action"] for e in history_resp.json()]
     assert "ai_analysis" in actions
+
+
+def test_analyze_endpoint_falls_back_when_ai_fails(client, sample_customer):
+    created = client.post("/tickets", json={
+        "customer_id": sample_customer.customer_id,
+        "message": "The API returns a crash during integration sync.",
+    }).json()
+
+    with patch.object(
+        analysis_service, "_call_ai_service", side_effect=Exception("simulated AI failure")
+    ):
+        response = client.post(f"/tickets/{created['ticket_id']}/analyze")
+
+    assert response.status_code == 200
+    body = response.json()
+    assert body["analysis_source"] == "rule_based_fallback"
+    assert body["category"] == "technical"
+    assert body["assigned_team"] == "tier2_support"

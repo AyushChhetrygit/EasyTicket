@@ -10,9 +10,9 @@ import streamlit as st
 
 BACKEND_BASE_URL = os.getenv("EASYTICKET_BACKEND_URL", "http://localhost:8000")
 CUSTOMERS = {
-    "CUST-101 Enterprise": {"customer_id": "CUST-101", "plan": "Enterprise"},
-    "CUST-202 Pro": {"customer_id": "CUST-202", "plan": "Pro"},
-    "CUST-303 Free": {"customer_id": "CUST-303", "plan": "Free"},
+    "CUST-1001 Enterprise": {"customer_id": "CUST-1001", "plan": "enterprise"},
+    "CUST-1002 Pro": {"customer_id": "CUST-1002", "plan": "pro"},
+    "CUST-1003 Free": {"customer_id": "CUST-1003", "plan": "free"},
 }
 
 
@@ -61,7 +61,7 @@ def create_ticket_page() -> None:
                 st.write("Confidence:", result.get("classification_confidence"))
                 st.write("Priority:", result.get("priority"))
                 st.write("Assigned team:", result.get("assigned_team"))
-                st.write("Reason:", result.get("reason"))
+                st.write("Reason:", result.get("ai_reason"))
                 st.write("Analysis source:", result.get("analysis_source", "backend"))
             except RuntimeError as error:
                 st.error(str(error))
@@ -69,13 +69,17 @@ def create_ticket_page() -> None:
 
 def ticket_list_page() -> None:
     st.header("Tickets")
-    status = st.selectbox("Status", ["all", "open", "in_progress", "resolved", "escalated"])
-    priority = st.selectbox("Priority", ["all", "P0", "P1", "P2", "P3", "P4"])
+    status = st.selectbox("Status", ["all", "new", "open", "in_progress", "resolved", "escalated", "closed"])
+    priority = st.selectbox("Priority", ["all", "low", "medium", "high", "urgent"])
     team = st.selectbox(
         "Team",
-        ["all", "Account Support", "Billing Support", "Technical Support", "Engineering", "Product Team"],
+        ["all", "tier1_support", "tier2_support", "billing_team", "engineering", "account_management"],
     )
-    params = {k: v for k, v in {"status": status, "priority": priority, "team": team}.items() if v != "all"}
+    params = {
+        k: v
+        for k, v in {"status": status, "priority": priority, "assigned_team": team}.items()
+        if v != "all"
+    }
 
     try:
         tickets = api_request("GET", "/tickets", params=params)
@@ -106,7 +110,7 @@ def ticket_details_page() -> None:
             st.error(str(error))
 
     st.subheader("Manual Escalation")
-    team = st.selectbox("Escalation team", ["Engineering", "Billing Support", "Account Support", "Product Team"])
+    team = st.selectbox("Escalation team", ["engineering", "billing_team", "tier1_support", "tier2_support", "account_management"])
     reason = st.text_area("Escalation reason")
     if st.button("Escalate"):
         try:
