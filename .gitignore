@@ -4,12 +4,11 @@ __pycache__/
 *.pyo
 *.pyd
 .Python
+*.egg-info/
+.eggs/
 .venv/
 venv/
 env/
-.pytest_cache/
-.mypy_cache/
-.ruff_cache/
 
 # Environment and secrets
 .env
@@ -20,6 +19,18 @@ env/
 *secret*
 *secrets*
 
+# Database
+data/tickets.db
+data/test_tickets.db
+data/*.db-journal
+
+# Testing
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+
 # OS and editor files
 .DS_Store
 .idea/
@@ -28,4 +39,3 @@ env/
 # Build artifacts
 build/
 dist/
-*.egg-info/
