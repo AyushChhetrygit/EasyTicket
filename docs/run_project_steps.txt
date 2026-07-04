@@ -1,0 +1,202 @@
+EasyTicket: Steps to Run the Project So Far
+
+1. Open the project folder
+
+   cd /Users/ayushchhetry/ticket
+
+2. Create and activate a Python virtual environment
+
+   python3 -m venv .venv
+   source .venv/bin/activate
+
+3. Install dependencies
+
+   pip install -r requirements.txt
+
+4. Create your local environment file
+
+   cp .env.example .env
+
+5. Use mock AI mode for local development
+
+   Keep these values in .env:
+
+   MOCK_AI_MODE=true
+   USE_MOCK_AI=true
+
+   This lets the project run without a Gemini API key and avoids token/API costs.
+
+6. Optional: configure live Gemini mode
+
+   Only do this when you want real Gemini API calls:
+
+   GEMINI_API_KEY=your_api_key_here
+   MOCK_AI_MODE=false
+   USE_MOCK_AI=false
+
+   Do not commit .env. It is ignored by Git.
+
+7. Initialize and seed the local database
+
+   .venv/bin/python scripts/seed_data.py
+
+   The default SQLite database is:
+
+   data/tickets.db
+
+8. Run the FastAPI backend
+
+   .venv/bin/uvicorn app.main:app --reload
+
+   Backend URL:
+
+   http://127.0.0.1:8000
+
+   Health check:
+
+   http://127.0.0.1:8000/health
+
+9. Run the Streamlit frontend in a second terminal
+
+   cd /Users/ayushchhetry/ticket
+   source .venv/bin/activate
+   EASYTICKET_BACKEND_URL=http://127.0.0.1:8000 .venv/bin/streamlit run frontend/app.py
+
+   Frontend URL:
+
+   http://127.0.0.1:8501
+
+10. Combined backend + frontend manual test
+
+   Terminal 1:
+
+   .venv/bin/uvicorn app.main:app --reload
+
+   Terminal 2:
+
+   EASYTICKET_BACKEND_URL=http://127.0.0.1:8000 .venv/bin/streamlit run frontend/app.py
+
+   In Streamlit:
+
+   Select a customer.
+   Enter a ticket message.
+   Click Create Ticket.
+   Copy or keep the created ticket ID.
+   Click Analyze Ticket.
+   Confirm category, subcategory, confidence, priority, assigned team, reason, and analysis source are displayed.
+   Open Ticket Details and confirm ticket history appears.
+
+11. API endpoint examples
+
+   Health:
+
+   curl http://127.0.0.1:8000/health
+
+   Create ticket:
+
+   curl -X POST http://127.0.0.1:8000/tickets \
+     -H "Content-Type: application/json" \
+     -d '{"customer_id":"CUST-1001","message":"My payment was deducted but my subscription is inactive."}'
+
+   List tickets:
+
+   curl "http://127.0.0.1:8000/tickets?status=open&page=1&page_size=20"
+
+   View ticket:
+
+   curl http://127.0.0.1:8000/tickets/TICKET_ID_HERE
+
+   Analyze ticket:
+
+   curl -X POST http://127.0.0.1:8000/tickets/TICKET_ID_HERE/analyze
+
+   Update ticket:
+
+   curl -X PATCH http://127.0.0.1:8000/tickets/TICKET_ID_HERE \
+     -H "Content-Type: application/json" \
+     -d '{"status":"in_progress"}'
+
+   Manual escalation:
+
+   curl -X POST http://127.0.0.1:8000/tickets/TICKET_ID_HERE/escalate \
+     -H "Content-Type: application/json" \
+     -d '{"reason":"Customer is blocked and needs engineering review.","team":"engineering"}'
+
+   Ticket history:
+
+   curl http://127.0.0.1:8000/tickets/TICKET_ID_HERE/history
+
+12. Important API values
+
+   Customers from seed data:
+
+   CUST-1001
+   CUST-1002
+   CUST-1003
+   CUST-1004
+   CUST-1005
+
+   Status values:
+
+   new
+   open
+   in_progress
+   escalated
+   resolved
+   closed
+
+   Priority values:
+
+   low
+   medium
+   high
+   urgent
+
+   Team values:
+
+   tier1_support
+   tier2_support
+   billing_team
+   engineering
+   account_management
+
+13. Run tests
+
+   .venv/bin/python -m pytest
+
+   Current expected result:
+
+   49 passed
+
+14. Useful development commands
+
+   Check Git status:
+
+   git status --short --branch
+
+   Run all tests:
+
+   .venv/bin/python -m pytest
+
+   Run schema demo:
+
+   .venv/bin/python app/models/test_schema.py
+
+   Reset local database:
+
+   .venv/bin/python scripts/reset_db.py
+
+   Seed local database:
+
+   .venv/bin/python scripts/seed_data.py
+
+15. Current recommended workflow for teammates
+
+   Pull the latest branch.
+   Activate .venv.
+   Install requirements.
+   Keep USE_MOCK_AI=true while building.
+   Seed the local database.
+   Run backend and frontend in separate terminals.
+   Run tests before committing.
+   Work on separate branches for separate features.
