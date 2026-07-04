@@ -36,45 +36,139 @@ EasyTicket: Steps to Run the Project So Far
 
    Do not commit .env. It is ignored by Git.
 
-7. Run the test suite
+7. Initialize and seed the local database
 
-   .venv/bin/python -m unittest discover -s tests
+   .venv/bin/python scripts/seed_data.py
 
-   Expected result:
+   The default SQLite database is:
 
-   Ran 29 tests
-   OK
+   data/tickets.db
 
-8. Run the schema demo script
+8. Run the FastAPI backend
 
-   .venv/bin/python app/models/test_schema.py
+   .venv/bin/uvicorn app.main:app --reload
 
-9. Run the Streamlit frontend
+   Backend URL:
 
-   streamlit run frontend/app.py
+   http://127.0.0.1:8000
 
-   By default, the frontend expects the backend at:
+   Health check:
 
-   http://localhost:8000
+   http://127.0.0.1:8000/health
 
-10. Change the backend URL for Streamlit if needed
+9. Run the Streamlit frontend in a second terminal
 
-   EASYTICKET_BACKEND_URL=http://localhost:8000 streamlit run frontend/app.py
+   cd /Users/ayushchhetry/ticket
+   source .venv/bin/activate
+   EASYTICKET_BACKEND_URL=http://127.0.0.1:8000 .venv/bin/streamlit run frontend/app.py
 
-11. Current backend status
+   Frontend URL:
 
-   The AI services and workflow exist as plain Python modules:
+   http://127.0.0.1:8501
 
-   app/services/classification_service.py
-   app/services/priority_service.py
-   app/services/routing_service.py
-   app/services/mock_ai_service.py
-   app/workflows/ticket_analysis_workflow.py
+10. Combined backend + frontend manual test
 
-   A FastAPI backend with /tickets endpoints has not been implemented yet.
-   The Streamlit frontend is ready to call those endpoints once the backend API is added.
+   Terminal 1:
 
-12. Useful development commands
+   .venv/bin/uvicorn app.main:app --reload
+
+   Terminal 2:
+
+   EASYTICKET_BACKEND_URL=http://127.0.0.1:8000 .venv/bin/streamlit run frontend/app.py
+
+   In Streamlit:
+
+   Select a customer.
+   Enter a ticket message.
+   Click Create Ticket.
+   Copy or keep the created ticket ID.
+   Click Analyze Ticket.
+   Confirm category, subcategory, confidence, priority, assigned team, reason, and analysis source are displayed.
+   Open Ticket Details and confirm ticket history appears.
+
+11. API endpoint examples
+
+   Health:
+
+   curl http://127.0.0.1:8000/health
+
+   Create ticket:
+
+   curl -X POST http://127.0.0.1:8000/tickets \
+     -H "Content-Type: application/json" \
+     -d '{"customer_id":"CUST-1001","message":"My payment was deducted but my subscription is inactive."}'
+
+   List tickets:
+
+   curl "http://127.0.0.1:8000/tickets?status=open&page=1&page_size=20"
+
+   View ticket:
+
+   curl http://127.0.0.1:8000/tickets/TICKET_ID_HERE
+
+   Analyze ticket:
+
+   curl -X POST http://127.0.0.1:8000/tickets/TICKET_ID_HERE/analyze
+
+   Update ticket:
+
+   curl -X PATCH http://127.0.0.1:8000/tickets/TICKET_ID_HERE \
+     -H "Content-Type: application/json" \
+     -d '{"status":"in_progress"}'
+
+   Manual escalation:
+
+   curl -X POST http://127.0.0.1:8000/tickets/TICKET_ID_HERE/escalate \
+     -H "Content-Type: application/json" \
+     -d '{"reason":"Customer is blocked and needs engineering review.","team":"engineering"}'
+
+   Ticket history:
+
+   curl http://127.0.0.1:8000/tickets/TICKET_ID_HERE/history
+
+12. Important API values
+
+   Customers from seed data:
+
+   CUST-1001
+   CUST-1002
+   CUST-1003
+   CUST-1004
+   CUST-1005
+
+   Status values:
+
+   new
+   open
+   in_progress
+   escalated
+   resolved
+   closed
+
+   Priority values:
+
+   low
+   medium
+   high
+   urgent
+
+   Team values:
+
+   tier1_support
+   tier2_support
+   billing_team
+   engineering
+   account_management
+
+13. Run tests
+
+   .venv/bin/python -m pytest
+
+   Current expected result:
+
+   49 passed
+
+14. Useful development commands
 
    Check Git status:
 
@@ -82,16 +176,27 @@ EasyTicket: Steps to Run the Project So Far
 
    Run all tests:
 
-   .venv/bin/python -m unittest discover -s tests
+   .venv/bin/python -m pytest
 
-   Run Streamlit:
+   Run schema demo:
 
-   .venv/bin/streamlit run frontend/app.py
+   .venv/bin/python app/models/test_schema.py
 
-13. Current recommended workflow for teammates
+   Reset local database:
+
+   .venv/bin/python scripts/reset_db.py
+
+   Seed local database:
+
+   .venv/bin/python scripts/seed_data.py
+
+15. Current recommended workflow for teammates
 
    Pull the latest branch.
    Activate .venv.
+   Install requirements.
    Keep USE_MOCK_AI=true while building.
+   Seed the local database.
+   Run backend and frontend in separate terminals.
    Run tests before committing.
    Work on separate branches for separate features.
