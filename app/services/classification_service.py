@@ -9,6 +9,7 @@ from google import genai
 from google.genai import types
 from pydantic import ValidationError
 
+from app.agents.prompts.classification_prompt import CLASSIFICATION_SYSTEM_PROMPT
 from app.models.ai_schemas import TicketAnalysisResult
 from config.llm_config import LLMConfig, get_llm_config
 
@@ -126,7 +127,7 @@ class TicketClassificationService:
                 subcategory="account_access",
                 classification_confidence=0.84,
                 priority="P2",
-                assigned_team="Account Management",
+                assigned_team="Account Support",
                 reason="The ticket appears related to account access or account state.",
             )
 
@@ -151,12 +152,5 @@ class TicketClassificationService:
 
     def _system_prompt(self) -> str:
         return (
-            "You are an expert ticket triage AI. Return strict JSON only. "
-            "Schema fields: category, subcategory, classification_confidence, "
-            "priority, assigned_team, reason. "
-            "Allowed categories: account, billing, technical, refund, feature_request. "
-            "Allowed priorities: P0, P1, P2, P3, P4. "
-            "Allowed teams: Billing Support, Technical Support, Account Management, "
-            "Product Team. "
-            "Use concise, engineering-ready reasons."
+            CLASSIFICATION_SYSTEM_PROMPT
         )

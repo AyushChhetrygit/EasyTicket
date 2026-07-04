@@ -7,7 +7,8 @@ TicketPriority = Literal["P0", "P1", "P2", "P3", "P4"]
 SupportTeam = Literal[
     "Billing Support",
     "Technical Support",
-    "Account Management",
+    "Account Support",
+    "Engineering",
     "Product Team",
 ]
 
