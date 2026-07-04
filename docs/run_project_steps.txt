@@ -1,0 +1,97 @@
+EasyTicket: Steps to Run the Project So Far
+
+1. Open the project folder
+
+   cd /Users/ayushchhetry/ticket
+
+2. Create and activate a Python virtual environment
+
+   python3 -m venv .venv
+   source .venv/bin/activate
+
+3. Install dependencies
+
+   pip install -r requirements.txt
+
+4. Create your local environment file
+
+   cp .env.example .env
+
+5. Use mock AI mode for local development
+
+   Keep these values in .env:
+
+   MOCK_AI_MODE=true
+   USE_MOCK_AI=true
+
+   This lets the project run without a Gemini API key and avoids token/API costs.
+
+6. Optional: configure live Gemini mode
+
+   Only do this when you want real Gemini API calls:
+
+   GEMINI_API_KEY=your_api_key_here
+   MOCK_AI_MODE=false
+   USE_MOCK_AI=false
+
+   Do not commit .env. It is ignored by Git.
+
+7. Run the test suite
+
+   .venv/bin/python -m unittest discover -s tests
+
+   Expected result:
+
+   Ran 29 tests
+   OK
+
+8. Run the schema demo script
+
+   .venv/bin/python app/models/test_schema.py
+
+9. Run the Streamlit frontend
+
+   streamlit run frontend/app.py
+
+   By default, the frontend expects the backend at:
+
+   http://localhost:8000
+
+10. Change the backend URL for Streamlit if needed
+
+   EASYTICKET_BACKEND_URL=http://localhost:8000 streamlit run frontend/app.py
+
+11. Current backend status
+
+   The AI services and workflow exist as plain Python modules:
+
+   app/services/classification_service.py
+   app/services/priority_service.py
+   app/services/routing_service.py
+   app/services/mock_ai_service.py
+   app/workflows/ticket_analysis_workflow.py
+
+   A FastAPI backend with /tickets endpoints has not been implemented yet.
+   The Streamlit frontend is ready to call those endpoints once the backend API is added.
+
+12. Useful development commands
+
+   Check Git status:
+
+   git status --short --branch
+
+   Run all tests:
+
+   .venv/bin/python -m unittest discover -s tests
+
+   Run Streamlit:
+
+   .venv/bin/streamlit run frontend/app.py
+
+13. Current recommended workflow for teammates
+
+   Pull the latest branch.
+   Activate .venv.
+   Keep USE_MOCK_AI=true while building.
+   Run tests before committing.
+   Work on separate branches for separate features.
