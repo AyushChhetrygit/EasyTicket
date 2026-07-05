@@ -1,0 +1,35 @@
+[
+  {
+    "customer_id": "CUST-1001",
+    "message": "I was charged twice for my enterprise subscription this month.",
+    "status": "new",
+    "category": "billing",
+    "subcategory": "duplicate_charge",
+    "priority": "high",
+    "assigned_team": "billing_team",
+    "classification_confidence": 0.94,
+    "ai_reason": "Message explicitly mentions duplicate billing charge."
+  },
+  {
+    "customer_id": "CUST-1002",
+    "message": "The API keeps returning a 500 error when I upload files over 10MB.",
+    "status": "open",
+    "category": "technical",
+    "subcategory": "api_error",
+    "priority": "urgent",
+    "assigned_team": "engineering",
+    "classification_confidence": 0.89,
+    "ai_reason": "Server error with a reproducible technical trigger."
+  },
+  {
+    "customer_id": "CUST-1003",
+    "message": "How do I reset my password? I can't find the option in settings.",
+    "status": "new",
+    "category": "account",
+    "subcategory": "password_reset",
+    "priority": "low",
+    "assigned_team": "tier1_support",
+    "classification_confidence": 0.97,
+    "ai_reason": "Straightforward account self-service question."
+  }
+]
