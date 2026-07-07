@@ -1,0 +1,47 @@
+Title
+Enterprise Priority Support
+
+Category
+Enterprise Support
+
+Problem description
+Enterprise customers require prioritized handling based on contract terms, severity level, support plan, business impact, and agreed response or resolution targets. Support must classify severity correctly and route urgent issues to the right teams.
+
+Symptoms
+- Enterprise customer reports critical production impact.
+- Customer references priority support, SLA, contract, or account manager.
+- Multiple users or business-critical workflows are affected.
+- Customer requests escalation or urgent response.
+- Issue affects security, uptime, billing, data access, or compliance.
+
+Troubleshooting steps
+- Confirm the customer is covered by an enterprise support plan.
+- Identify severity level based on business impact, not customer tone alone.
+- Collect affected services, number of users, deadlines, and workaround availability.
+- Check enterprise SLA and support channel requirements.
+- Tag the ticket with enterprise priority and severity.
+- Notify the assigned Customer Success Manager or Technical Account Manager if applicable.
+- Provide timely updates according to SLA expectations.
+
+Required information
+- Enterprise account name
+- Workspace or organization ID
+- Requester name and email
+- Severity level and business impact
+- Affected services or features
+- Number of affected users
+- Time issue started
+- Available workaround or blocker status
+- Contract or SLA reference if available
+
+When to escalate
+- Escalate P0/P1 issues immediately to Support Lead and Engineering on-call.
+- Escalate SLA-risk tickets to Customer Success or Account Management.
+- Escalate security or data incidents to Security and Legal/Privacy.
+- Escalate billing-impacting enterprise issues to Billing and Finance.
+
+Suggested customer response
+Thank you for contacting priority support. I understand this may be business-critical, so I am collecting the details needed to classify severity and route it correctly. Please share the affected workspace, impact, number of users affected, when it started, and whether any workaround is available. We will provide updates according to your support plan.
+
+Source filename
+enterprise_priority_support.txt

@@ -1,0 +1,45 @@
+Title
+Feature Request Process
+
+Category
+Product Feedback
+
+Problem description
+Customers want to request a new feature, product improvement, integration, workflow change, or customization. Support must capture the request clearly, identify business value, check for existing workarounds, and route it to Product when appropriate.
+
+Symptoms
+- Customer asks whether a feature exists.
+- Customer requests a missing capability or integration.
+- Customer says current workflow is inefficient.
+- Customer asks for roadmap timeline or release date.
+- Multiple customers request the same improvement.
+
+Troubleshooting steps
+- Check whether the requested feature already exists or has a workaround.
+- Ask the customer to describe the use case, desired outcome, and current limitation.
+- Capture customer segment, plan, urgency, and business impact.
+- Search existing feature request tracker for duplicates.
+- Link the customer ticket to the existing request if one exists.
+- Avoid promising a release date unless Product has officially confirmed it.
+- Share available workaround or documentation where possible.
+
+Required information
+- Customer account or workspace ID
+- Requested feature description
+- Use case and expected outcome
+- Current workaround, if any
+- Business impact or number of affected users
+- Priority from the customer perspective
+- Examples, screenshots, or workflow details
+
+When to escalate
+- Escalate to Product if the request has high business impact or repeated customer demand.
+- Escalate to Customer Success for enterprise customers with contractual or renewal impact.
+- Escalate to Engineering only if the feature is actually a bug or missing expected functionality.
+- Escalate to Support Lead if customer asks for roadmap commitments.
+
+Suggested customer response
+Thanks for sharing this feature request. I have captured the use case and business impact so it can be reviewed by our Product team. I cannot promise a release timeline, but your feedback helps us prioritize improvements. If there is an existing workaround, I will share it with you while the request is being evaluated.
+
+Source filename
+feature_request_process.txt

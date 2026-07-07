@@ -1,0 +1,46 @@
+Title
+Subscription Cancellation Policy
+
+Category
+Billing and Subscriptions
+
+Problem description
+Customers want to cancel a subscription, understand when access ends, stop renewal, avoid future charges, or confirm whether cancellation affects workspace data, invoices, refunds, or team access.
+
+Symptoms
+- Customer asks to cancel subscription.
+- Customer says they were charged after cancelling.
+- Billing page still shows active plan.
+- Customer cannot find cancel option.
+- Customer asks whether data will be deleted after cancellation.
+- Workspace enters free, limited, or read-only state after cancellation.
+
+Troubleshooting steps
+- Confirm whether the customer is an account owner or billing admin.
+- Explain that cancellation generally stops future renewals but does not always trigger automatic refund.
+- Check current plan, renewal date, cancellation status, and billing period.
+- Guide the customer to billing settings if self-service cancellation is available.
+- Confirm whether cancellation is immediate or end-of-cycle based on plan policy.
+- Advise customer to export critical data before access changes if needed.
+- Document cancellation request and confirmation timestamp.
+
+Required information
+- Workspace ID or account ID
+- Billing admin email address
+- Current plan name
+- Renewal date
+- Reason for cancellation, if customer provides it
+- Whether customer wants immediate cancellation or end-of-cycle cancellation
+- Screenshot if cancel option is unavailable
+
+When to escalate
+- Escalate to Billing if cancellation cannot be completed from the dashboard.
+- Escalate to Retention/Customer Success for enterprise or annual contracts.
+- Escalate to Finance if refund or charge dispute is involved.
+- Escalate to Engineering if billing status does not update after cancellation.
+
+Suggested customer response
+I can help clarify the cancellation process. Cancelling your subscription will stop future renewals, and your access may continue until the end of the current billing period depending on your plan. Please make sure you are logged in as the billing admin and go to Billing Settings to cancel. If the option is missing, share your workspace ID and billing email so we can check it.
+
+Source filename
+subscription_cancellation_policy.txt

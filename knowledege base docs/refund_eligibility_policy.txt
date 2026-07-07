@@ -1,0 +1,46 @@
+Title: Refund Eligibility Policy
+Category: Billing and Refunds
+
+Problem description:
+Customers may request a refund because of accidental purchase, duplicate charge, unused subscription, failed activation, dissatisfaction, or cancellation confusion. This document explains how to collect refund details and determine whether escalation is required.
+
+Symptoms:
+- Customer asks for a refund.
+- Customer reports duplicate billing.
+- Customer says they cancelled but were still charged.
+- Customer paid for the wrong plan.
+- Customer cannot access paid features and wants money back.
+- Customer reports accidental purchase or unauthorized charge.
+
+Troubleshooting steps:
+1. Acknowledge the refund request politely.
+2. Ask for the account email and billing email.
+3. Request the invoice number, transaction ID, or receipt.
+4. Confirm the purchase date and plan purchased.
+5. Check whether the customer purchased through web, app store, marketplace, reseller, or enterprise contract.
+6. Explain that eligibility depends on purchase channel, timing, usage, and applicable policy.
+7. Do not promise approval until billing review is complete.
+8. Escalate refund requests that involve duplicate charges, failed activation, or unauthorized transactions.
+
+Required information:
+- Account email address.
+- Billing email address.
+- Invoice number or transaction ID.
+- Purchase date.
+- Plan name.
+- Reason for refund request.
+- Purchase channel.
+- Any cancellation confirmation, if available.
+
+When to escalate:
+- Duplicate charge is reported.
+- Unauthorized payment is reported.
+- Subscription failed to activate after successful payment.
+- Customer is within a stated refund window but refund cannot be processed automatically.
+- Enterprise, reseller, or app-store purchase needs special handling.
+- Customer threatens chargeback or legal action.
+
+Suggested customer response:
+Hi, I understand you would like to request a refund. Please share your account email, billing email, invoice number or transaction ID, purchase date, and the reason for the refund request. Once we have these details, our billing team can review the request based on the applicable refund policy and purchase channel. We cannot confirm approval until the review is complete.
+
+Source filename: refund_eligibility_policy.txt

@@ -1,0 +1,45 @@
+Title
+Account Deletion Policy
+
+Category
+Account Management and Privacy
+
+Problem description
+A customer wants to permanently delete their account and associated personal data. Account deletion may affect workspace access, ownership, billing, audit records, team data, and compliance retention obligations.
+
+Symptoms
+- Customer requests account deletion.
+- Customer asks whether all data will be removed.
+- User cannot delete account because they are workspace owner.
+- Customer wants personal data removed but workspace retained.
+- Deletion request is blocked due to active subscription, ownership, or legal retention.
+
+Troubleshooting steps
+- Confirm the requester owns the account being deleted.
+- Explain that account deletion is permanent and may not delete shared workspace data owned by an organization.
+- Check whether the user is the sole workspace owner or billing admin.
+- Ask the user to transfer workspace ownership or cancel active subscriptions if required.
+- Confirm whether the request is account deletion, workspace deletion, or data privacy deletion.
+- Follow internal privacy and retention procedures.
+- Do not delete account data until identity and ownership checks are complete.
+
+Required information
+- Account email address
+- Workspace ID or organization name
+- Whether the request is for account, workspace, or personal data deletion
+- Confirmation that the user understands deletion is permanent
+- Proof of ownership if required
+- Active subscription or billing status
+- Any legal, compliance, or enterprise contract context
+
+When to escalate
+- Escalate to Privacy/Legal for formal data deletion requests.
+- Escalate to Billing if active paid subscription blocks deletion.
+- Escalate to Workspace Admin Support if ownership transfer is required.
+- Escalate to Security if request appears suspicious or account compromise is suspected.
+
+Suggested customer response
+Account deletion is permanent, so we need to verify ownership and make sure there are no active workspace ownership or billing dependencies. Please confirm whether you want to delete only your user account, the entire workspace, or personal data associated with the account. Also confirm that you understand this action cannot be undone once completed.
+
+Source filename
+account_deletion_policy.txt

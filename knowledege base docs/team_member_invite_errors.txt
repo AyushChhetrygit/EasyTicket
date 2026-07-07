@@ -1,0 +1,47 @@
+Title
+Team Member Invite Errors
+
+Category
+Workspace and Team Management
+
+Problem description
+A workspace admin or member cannot invite a teammate because the invite email fails, invite link expires, role permissions are invalid, seat limits are reached, domain restrictions block the invite, or the invited user already belongs to another workspace.
+
+Symptoms
+- Invite email is not received.
+- Invite link says expired, invalid, or already used.
+- Admin sees an error while sending invite.
+- User cannot accept the invitation.
+- Workspace reports no available seats.
+- Domain or SSO policy prevents joining.
+
+Troubleshooting steps
+- Confirm the inviter has permission to invite team members.
+- Check available seats and plan limits.
+- Verify the invited email address spelling and domain.
+- Ask the invited user to check spam, promotions, or blocked email folders.
+- Resend the invite or generate a new invite link if the current one expired.
+- Check whether domain restrictions, SSO enforcement, or SCIM provisioning controls membership.
+- Confirm whether the user already has an account with the same email and whether account merge is needed.
+
+Required information
+- Workspace ID or name
+- Inviter email address
+- Invitee email address
+- Role being assigned
+- Error message or screenshot
+- Date and time invite was sent
+- Plan type and seat count
+- Whether SSO or domain restriction is enabled
+
+When to escalate
+- Escalate to Workspace Admin Support if invite permissions or roles are misconfigured.
+- Escalate to Billing if additional seats are required but cannot be purchased.
+- Escalate to Engineering if invite links fail despite valid permissions and seats.
+- Escalate to Enterprise Support if SCIM/SSO provisioning controls the invite flow.
+
+Suggested customer response
+Thanks for the details. Please confirm that the inviter has admin permission and that your workspace has an available seat. Then resend the invitation and ask the teammate to check spam or promotions folders. If the invite still fails, send us the inviter email, invitee email, workspace name, and the exact error message so we can investigate.
+
+Source filename
+team_member_invite_errors.txt

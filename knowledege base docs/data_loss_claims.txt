@@ -1,0 +1,47 @@
+Title
+Data Loss Claims
+
+Category
+Data Integrity and Recovery
+
+Problem description
+A customer reports that data, files, messages, records, settings, or project content disappeared unexpectedly. The cause may be accidental deletion, permission changes, sync delay, failed migration, retention policy, account merge issues, or a genuine system defect.
+
+Symptoms
+- Customer says files, tickets, projects, or records are missing.
+- Recently deleted items are not visible.
+- Content appears for one user but not another.
+- Workspace activity history shows deletion or movement.
+- Data disappeared after migration, import, sync, or role change.
+- Customer claims no one deleted the data.
+
+Troubleshooting steps
+- Acknowledge the report and avoid confirming permanent loss before investigation.
+- Collect exact item names, IDs, timestamps, and affected users.
+- Check audit logs for deletion, move, archive, permission change, or ownership transfer.
+- Check recycle bin, archive, retention settings, and version history.
+- Confirm whether the user is viewing the correct workspace, project, branch, or environment.
+- Review recent migrations, imports, integrations, or sync jobs.
+- Preserve logs and avoid destructive actions until investigation is complete.
+
+Required information
+- Workspace ID
+- Affected user email addresses
+- Names or IDs of missing items
+- Last time data was confirmed visible
+- Approximate time data went missing
+- Recent actions such as delete, import, sync, or migration
+- Screenshots showing missing data
+- Business impact and urgency
+
+When to escalate
+- Escalate immediately to Engineering/Data team if system defect or backup restore may be required.
+- Escalate to Security if unauthorized deletion or account compromise is suspected.
+- Escalate to Legal/Compliance for regulated data or enterprise contractual obligations.
+- Escalate to Support Lead for high-impact or public customer complaints.
+
+Suggested customer response
+I’m sorry you are experiencing this. We will investigate carefully before making any conclusion. Please share the affected workspace, item names or IDs, when the data was last visible, when you noticed it missing, and any recent changes such as deletion, migration, import, or permission updates. We will check audit logs and recovery options.
+
+Source filename
+data_loss_claims.txt

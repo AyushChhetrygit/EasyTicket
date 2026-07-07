@@ -1,0 +1,45 @@
+Title: API Authentication Errors
+Category: API and Developer Support
+
+Problem description:
+Developers may receive authentication or authorization errors when calling the API because of invalid API keys, expired tokens, missing headers, incorrect environment, revoked credentials, or insufficient permissions.
+
+Symptoms:
+- API returns 401 Unauthorized.
+- API returns 403 Forbidden.
+- Error says invalid API key, missing token, expired token, or permission denied.
+- Requests work locally but fail in production.
+- Customer recently rotated or revoked credentials.
+- Customer is using the wrong workspace, environment, or project.
+
+Troubleshooting steps:
+1. Confirm the customer is using the correct API base URL and environment.
+2. Ask the customer to verify that the Authorization header is included correctly.
+3. Confirm the API key or token has not expired, been revoked, or been regenerated.
+4. Ask the customer to check for extra spaces, quotation marks, or hidden characters in the token.
+5. Confirm the API key belongs to the correct workspace or project.
+6. Ask whether the key has the required scopes or permissions.
+7. Ask the customer to test with a minimal curl request.
+8. Recommend rotating the API key if it may have been exposed.
+
+Required information:
+- Account or workspace ID.
+- API endpoint being called.
+- HTTP status code.
+- Full error message.
+- Request ID or trace ID, if available.
+- Timestamp of failed request.
+- Environment used, such as development, staging, or production.
+- Sanitized request headers and payload, with secrets removed.
+
+When to escalate:
+- Valid credentials fail across multiple endpoints.
+- Customer reports sudden API authentication failures with no code change.
+- Enterprise integration is blocked.
+- Error includes backend trace ID or request ID needing log investigation.
+- Customer suspects credential compromise.
+
+Suggested customer response:
+Hi, I can help troubleshoot the API authentication error. Please confirm the endpoint, status code, error message, request timestamp, and request ID if available. Also check that the Authorization header is formatted correctly and that the key belongs to the correct workspace and environment. Please remove or mask any secret keys before sending logs or screenshots.
+
+Source filename: api_authentication_errors.txt

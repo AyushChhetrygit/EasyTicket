@@ -1,0 +1,43 @@
+Title: Missing Workspace Restore
+Category: Workspace Management
+
+Problem description:
+Customers may report that a workspace is missing, deleted, archived, or no longer visible after login. This document explains how to identify whether the workspace can be restored and what information is required.
+
+Symptoms:
+- Customer cannot see a workspace after logging in.
+- Workspace appears deleted or archived.
+- Customer sees an empty dashboard instead of the expected workspace.
+- Customer was removed from the workspace by another admin.
+- Workspace data, projects, or files appear missing.
+
+Troubleshooting steps:
+1. Ask the customer to confirm they are signed in with the correct email address.
+2. Ask them to check if they are using the correct organization or tenant.
+3. Ask whether another admin recently removed users, changed roles, archived the workspace, or deleted it.
+4. Ask the customer to refresh the page and try another browser.
+5. Ask them to check whether the workspace appears under archived or inactive workspaces.
+6. Confirm the approximate date and time when the workspace was last visible.
+7. Check whether the issue affects only one user or multiple users.
+8. If deletion or data loss is suspected, escalate before making any changes.
+
+Required information:
+- Workspace name.
+- Workspace ID, if available.
+- Customer account email.
+- Organization or tenant name.
+- Date and time when the workspace was last accessible.
+- Names or emails of affected users.
+- Screenshot of the dashboard or error message.
+
+When to escalate:
+- Workspace appears deleted and customer requests restoration.
+- Workspace contains business-critical or enterprise data.
+- Multiple users are affected.
+- Customer claims data loss after migration, billing changes, or admin action.
+- Workspace restoration requires backend or database access.
+
+Suggested customer response:
+Hi, I can help investigate the missing workspace. Please confirm the email address you are signed in with, the workspace name, and the last time you were able to access it. If you have a workspace ID or screenshot, please share that as well. We will check whether the workspace is archived, deleted, or affected by a permission change, and we will escalate restoration if needed.
+
+Source filename: missing_workspace_restore.txt

@@ -1,0 +1,45 @@
+Title: Enterprise Support SLA
+Category: Enterprise Support
+
+Problem description:
+Enterprise customers may ask about support response times, incident priority, escalation paths, and service-level agreements. This document explains how to classify urgency and collect the information needed for SLA-based support handling.
+
+Symptoms:
+- Enterprise customer asks for urgent support.
+- Customer says the issue is business-critical.
+- Multiple users or departments are affected.
+- Production workflow, API integration, billing, or authentication is down.
+- Customer asks whether the issue qualifies for SLA escalation.
+- Customer requests a status update on an existing enterprise ticket.
+
+Troubleshooting steps:
+1. Confirm the customer is part of an enterprise account.
+2. Identify the severity level based on impact and urgency.
+3. Ask how many users, teams, or workflows are affected.
+4. Collect error messages, timestamps, screenshots, and request IDs.
+5. Check whether the issue is ongoing or already resolved.
+6. Confirm business impact, such as blocked production, revenue impact, or security concern.
+7. Link the ticket to the enterprise organization and customer account manager if applicable.
+8. Escalate according to severity and support agreement.
+
+Required information:
+- Enterprise organization name.
+- Admin or requester email.
+- Severity or business impact.
+- Number of affected users.
+- Affected product area.
+- Start time of the issue.
+- Error messages, screenshots, logs, or request IDs.
+- Existing ticket number, if any.
+
+When to escalate:
+- Production system is down.
+- Authentication, billing, API, or workspace access is blocked for many users.
+- Security, privacy, or compliance risk is reported.
+- Customer has an enterprise SLA and requests urgent handling.
+- Executive sponsor, account manager, or legal team is involved.
+
+Suggested customer response:
+Hi, thanks for contacting enterprise support. Please share your organization name, requester email, affected product area, number of impacted users, start time, and any error messages or request IDs. We will classify the severity based on business impact and route the issue according to your support agreement. If this is blocking production or affecting many users, we will prioritize escalation.
+
+Source filename: enterprise_support_sla.txt

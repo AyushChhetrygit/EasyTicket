@@ -1,0 +1,44 @@
+Title: Account Suspension Policy
+Category: Trust and Safety
+
+Problem description:
+Customers may contact support because their account is suspended, restricted, or temporarily disabled. Suspensions may be related to policy violations, payment issues, suspicious activity, abuse prevention, compliance review, or security concerns.
+
+Symptoms:
+- Customer cannot log in because the account is suspended.
+- Customer sees a restricted, disabled, blocked, or suspended account message.
+- Customer cannot access workspace data or paid features.
+- Customer received a suspension notice by email.
+- Customer believes the suspension was a mistake.
+- Customer asks how to appeal the suspension.
+
+Troubleshooting steps:
+1. Ask the customer for the account email and organization name.
+2. Ask them to share the suspension message or notice, if available.
+3. Do not disclose internal risk signals, detection logic, or enforcement details.
+4. Check whether the issue is related to billing, security, abuse, or policy enforcement.
+5. Ask whether the customer recently noticed suspicious login activity.
+6. If an appeal is allowed, collect the customer explanation and supporting details.
+7. Route the case to Trust and Safety, Billing, or Security depending on the reason.
+8. Avoid promising reinstatement until review is complete.
+
+Required information:
+- Account email address.
+- Organization or workspace name.
+- Suspension message or screenshot.
+- Date and time suspension was noticed.
+- Whether the customer received an email notice.
+- Customer explanation or appeal reason.
+- Any suspected unauthorized activity.
+
+When to escalate:
+- Customer requests an appeal.
+- Account suspension affects enterprise or paid customers.
+- Customer reports account compromise or unauthorized activity.
+- Suspension appears related to billing disputes, chargebacks, or compliance review.
+- Customer threatens legal action or media escalation.
+
+Suggested customer response:
+Hi, I understand you are unable to access your account due to a suspension. Please share your account email, organization name, the suspension message or screenshot, and any email notice you received. We will review the case and route it to the appropriate team. Please note that we cannot guarantee reinstatement until the review is complete, and we may not be able to share internal enforcement details.
+
+Source filename: account_suspension_policy.txt
