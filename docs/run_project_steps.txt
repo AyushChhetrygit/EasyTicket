@@ -166,7 +166,7 @@ EasyTicket: Steps to Run the Project So Far
 
    Current expected result:
 
-   49 passed
+   86 passed
 
 14. Useful development commands
 
@@ -177,6 +177,10 @@ EasyTicket: Steps to Run the Project So Far
    Run all tests:
 
    .venv/bin/python -m pytest
+
+   Run only RAG-related tests:
+
+   .venv/bin/python -m pytest tests/test_embedding_service.py tests/test_rag_search_service.py tests/test_response_generation_service.py tests/test_escalation_decision_service.py tests/test_missing_information_service.py tests/test_sentiment_service.py tests/test_escalation_packet_schemas.py tests/test_note_generation_services.py tests/test_text_normalization_service.py
 
    Run schema demo:
 
@@ -200,3 +204,36 @@ EasyTicket: Steps to Run the Project So Far
    Run backend and frontend in separate terminals.
    Run tests before committing.
    Work on separate branches for separate features.
+
+16. Manual RAG system check
+
+   The base RAG setup is local and does not require an API key. It reads text files from:
+
+   /Users/ayushchhetry/ticket/knowledege base docs
+
+   Run this from the project root:
+
+   .venv/bin/python -c "from app.models.customer import Customer; from app.models.ticket import Ticket; from app.services.rag_search_service import search_knowledge_base; from app.services.missing_information_service import detect_missing_information; from app.services.sentiment_service import analyze_sentiment; from app.services.escalation_decision_service import decide_escalation; from app.services.escalation_packet_service import generate_escalation_packet; import json; message='API returns 401 unauthorized in production for workspace WS-123 in Chrome.'; ticket=Ticket(customer_id='CUST-1001', message=message); customer=Customer(customer_id='CUST-1001', name='Demo Customer', plan='enterprise', previous_tickets=2); rag=search_knowledge_base(message); missing=detect_missing_information(message, 'technical'); sentiment=analyze_sentiment(message); decision=decide_escalation(ticket_message=message, category='technical', priority='high', assigned_team='engineering', retrieval_confidence=rag.confidence, customer_context={'plan': customer.plan, 'previous_tickets': customer.previous_tickets}, missing_information=missing); packet=generate_escalation_packet(ticket=ticket, customer=customer, classification='technical', priority='high', rag_result=rag, escalation_decision=decision); print(json.dumps({'rag_sources': rag.sources, 'rag_confidence': rag.confidence, 'missing_information': missing, 'sentiment': sentiment.__dict__, 'decision': decision.model_dump(), 'packet': packet.model_dump()}, indent=2))"
+
+   Expected manual signals:
+
+   rag_sources should include api_authentication_errors.txt.
+   rag_confidence should be greater than 0.
+   sentiment should show urgency because production is mentioned.
+   decision should request missing information or escalate depending on missing fields and priority.
+   packet should include internal_note and customer_reply.
+
+17. Manual text normalization check
+
+   The original ticket message is stored as submitted. Normalized text is used only for matching, retrieval, sentiment, and missing-information checks.
+
+   Run this from the project root:
+
+   .venv/bin/python -c 'from app.services.text_normalization_service import normalize_user_text; from app.services.rag_search_service import search_knowledge_base; from app.services.rule_based_router import classify_ticket; from app.services.sentiment_service import analyze_sentiment; message="pls help i can'\''t login asap"; print(normalize_user_text(message)); print(classify_ticket(message)); print(analyze_sentiment("pls fix asap production blocked")); print(search_knowledge_base("i paid for pro but my sub isn'\''t active").sources)'
+
+   Expected manual signals:
+
+   Normalized text should include please, cannot, and as soon as possible.
+   Routing should classify the login message as account-related.
+   Sentiment should show urgency for asap/production/blocked.
+   RAG sources should include subscription_activation.txt for the messy subscription message.

@@ -2,6 +2,7 @@ from dataclasses import dataclass
 from typing import Optional
 
 from app.models.enums import TicketCategory, TicketPriority, SupportTeam
+from app.services.text_normalization_service import normalize_user_text
 
 # --- Keyword banks ---
 
@@ -32,7 +33,7 @@ def _matches(text: str, keywords: list[str]) -> Optional[str]:
 
 
 def classify_ticket(message: str) -> RuleBasedResult:
-    text = message.lower()
+    text = normalize_user_text(message)
 
     # Outage takes priority over everything else — highest urgency, widest impact
     if hit := _matches(text, OUTAGE_KEYWORDS):

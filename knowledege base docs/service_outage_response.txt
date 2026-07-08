@@ -1,0 +1,45 @@
+Title
+Service Outage Response
+
+Category
+Incident and Availability
+
+Problem description
+Customers are unable to access the product or major functionality due to a service outage, degraded performance, API downtime, database issue, network failure, or third-party dependency incident.
+
+Symptoms
+- Multiple customers report login, dashboard, API, upload, export, or payment failures.
+- Increased error rates, timeouts, or latency.
+- Status page shows degraded performance or outage.
+- Internal monitoring alerts trigger for critical services.
+- Support receives repeated similar complaints in a short period.
+
+Troubleshooting steps
+- Check internal monitoring, status page, and incident channel.
+- Confirm whether the issue is isolated or widespread.
+- Collect affected region, feature, account type, and error messages.
+- Use the approved incident response template when replying to customers.
+- Avoid giving unsupported root-cause details before engineering confirmation.
+- Update customers when a workaround, mitigation, or resolution is available.
+- Tag or link tickets to the active incident for follow-up.
+
+Required information
+- Customer account or workspace ID
+- Affected feature or endpoint
+- Region or environment
+- Error message, status code, or screenshot
+- Start time of impact
+- Business impact or deadline
+- Whether a workaround is acceptable
+
+When to escalate
+- Escalate to Incident Commander or Engineering immediately for widespread impact.
+- Escalate to Infrastructure if latency, storage, database, or network alerts are active.
+- Escalate to Communications/Support Lead for status page or customer-wide updates.
+- Escalate enterprise customer issues according to SLA severity.
+
+Suggested customer response
+We are aware of an issue affecting part of the service and our team is actively investigating. I have linked your report to the incident so we can keep you updated. Please share the affected feature, error message, and when the issue started for you. We will provide updates as soon as we have confirmed information or a workaround.
+
+Source filename
+service_outage_response.txt

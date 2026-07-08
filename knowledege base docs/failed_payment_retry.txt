@@ -1,0 +1,45 @@
+Title
+Failed Payment Retry
+
+Category
+Billing and Payments
+
+Problem description
+A customer payment attempt failed due to card decline, insufficient funds, expired payment method, bank authentication failure, payment gateway timeout, or billing system validation error. The customer may still want to keep the subscription active and retry payment without losing service access.
+
+Symptoms
+- Payment status shows failed, declined, pending, or unpaid.
+- Customer receives a failed payment email or in-app billing warning.
+- Subscription access may be limited, paused, or marked as past due.
+- Invoice remains unpaid after an attempted charge.
+- Customer says the card is valid but the payment did not complete.
+
+Troubleshooting steps
+- Confirm the latest invoice/payment status in the billing dashboard.
+- Ask the customer to verify card number, expiry date, CVV, billing address, and available balance.
+- Check whether bank 3D Secure/OTP authentication was required and missed.
+- Ask the customer to try another payment method if the same card continues to fail.
+- Trigger a manual retry only if the billing system allows it and no duplicate successful payment exists.
+- Check payment gateway logs for decline code, timeout, duplicate charge, or fraud-risk block.
+- Advise the customer to contact their bank if the decline reason is issuer-related.
+
+Required information
+- Customer account ID or workspace ID
+- Invoice ID or payment transaction ID
+- Billing email address
+- Last four digits of the payment card, if available
+- Screenshot of the error message, if available
+- Date and approximate time of payment attempt
+- Payment gateway decline code, if visible internally
+
+When to escalate
+- Escalate to Billing if the customer was charged but invoice still shows unpaid.
+- Escalate to Engineering if retries fail due to payment service errors or gateway callback failures.
+- Escalate to Trust/Security if fraud or risk blocking is suspected.
+- Escalate to Finance for duplicate charge, reconciliation, or manual invoice correction.
+
+Suggested customer response
+Thanks for reaching out. I checked your payment status and it looks like the latest payment attempt did not complete. Please verify your payment method details and try again from the billing page. If the card is valid but still being declined, your bank may be blocking the transaction, so contacting them can help. If you were already charged, please share the payment receipt or transaction reference and we will investigate it further.
+
+Source filename
+failed_payment_retry.txt

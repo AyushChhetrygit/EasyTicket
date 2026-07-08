@@ -1,0 +1,15 @@
+- [ ]  Test the health endpoint.
+- [ ]  Test ticket creation.
+- [ ]  Test invalid customer ID.
+- [ ]  Test ticket listing.
+- [ ]  Test ticket retrieval.
+- [ ]  Test ticket update.
+- [ ]  Test invalid status update.
+- [ ]  Test manual escalation.
+- [ ]  Test ticket history.
+- [ ]  Test rule-based billing routing.
+- [ ]  Test rule-based technical routing.
+- [ ]  Test rule-based refund routing.
+- [ ]  Test fallback when AI raises an exception.
+- [ ]  Use a separate test SQLite database.
+- [ ]  Ensure tests do not modify development data.

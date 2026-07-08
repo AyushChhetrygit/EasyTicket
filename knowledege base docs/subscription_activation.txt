@@ -1,0 +1,42 @@
+Title: Subscription Activation Issues
+Category: Billing and Subscription
+
+Problem description:
+Customers may complete a payment but still see a free plan, inactive subscription, or locked premium features. This document explains how to troubleshoot delayed or failed subscription activation.
+
+Symptoms:
+- Customer paid but premium features are still locked.
+- Subscription status shows inactive, pending, or free.
+- Customer received a payment confirmation but not an activation confirmation.
+- Customer subscribed using a different email address.
+- Customer sees a billing error or checkout confirmation mismatch.
+
+Troubleshooting steps:
+1. Ask the customer to refresh the app and sign out, then sign back in.
+2. Confirm the customer is using the same email address used during checkout.
+3. Ask the customer to check whether payment was successful or still pending.
+4. Ask for the invoice number, transaction ID, or payment receipt.
+5. Confirm whether the subscription was purchased through web, mobile app, marketplace, or reseller.
+6. Check whether activation delays are expected for the payment method used.
+7. If the account still does not activate after verification, escalate to billing support.
+
+Required information:
+- Account email address.
+- Billing email address, if different.
+- Plan purchased.
+- Purchase date and time.
+- Invoice number or transaction ID.
+- Payment method or purchase channel.
+- Screenshot of the current subscription status.
+
+When to escalate:
+- Payment succeeded but subscription is not active.
+- Customer was charged more than once.
+- Enterprise or team subscription activation failed.
+- Customer cannot access paid features after invoice verification.
+- Refund, chargeback, or payment dispute is mentioned.
+
+Suggested customer response:
+Hi, thanks for sharing this. Please confirm the email address used for the purchase and send the invoice number or transaction ID from your payment receipt. Also try signing out and signing back in once. If the payment was successful but the subscription is still not active, we will escalate this to our billing team for manual verification and activation.
+
+Source filename: subscription_activation.txt

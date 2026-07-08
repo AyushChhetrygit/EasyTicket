@@ -1,0 +1,45 @@
+Title
+Invoice Not Generated
+
+Category
+Billing and Invoices
+
+Problem description
+A customer cannot find or download an invoice after a subscription renewal, plan purchase, payment, upgrade, or billing cycle. The invoice may not have been generated due to delayed payment confirmation, incomplete billing profile, tax validation error, or billing service issue.
+
+Symptoms
+- Invoice is missing from the billing dashboard.
+- Customer received a payment confirmation but no invoice.
+- Invoice download button is unavailable or returns an error.
+- Billing page shows pending invoice generation.
+- Customer needs invoice for accounting or tax filing.
+
+Troubleshooting steps
+- Confirm whether the payment has fully succeeded and is not pending.
+- Check the billing dashboard for invoice status and generation timestamp.
+- Verify that billing name, address, tax ID, and billing email are complete.
+- Refresh or regenerate the invoice if supported by the billing tool.
+- Check whether the invoice was sent to a different billing contact.
+- Search payment provider records using customer ID or transaction ID.
+- If generation failed, capture billing service logs and retry after correcting profile issues.
+
+Required information
+- Customer account ID or workspace ID
+- Billing email address
+- Payment date and amount
+- Invoice period or plan name
+- Transaction ID or payment receipt
+- Company name and tax ID if invoice details are missing
+- Screenshot of invoice page or error message
+
+When to escalate
+- Escalate to Billing if invoice metadata, tax details, or billing address must be corrected.
+- Escalate to Finance if a manual invoice is required.
+- Escalate to Engineering if invoice generation repeatedly fails or download links are broken.
+- Escalate to Support Lead for urgent enterprise accounting requests.
+
+Suggested customer response
+Thanks for reporting this. Invoices are usually generated after the payment is fully confirmed. Please check the billing page again and make sure your billing details are complete. If the invoice is still missing, send us the payment date, amount, billing email, and transaction reference so we can locate the payment and regenerate or provide the invoice.
+
+Source filename
+invoice_not_generated.txt

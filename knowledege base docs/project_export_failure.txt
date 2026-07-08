@@ -1,0 +1,47 @@
+Title
+Project Export Failure
+
+Category
+Projects and Data Export
+
+Problem description
+A customer cannot export a project or exported files are incomplete, corrupted, delayed, or unavailable. This may happen because of large project size, unsupported file types, permission restrictions, expired export links, background job failures, or storage service errors.
+
+Symptoms
+- Export button fails or remains stuck.
+- Export status shows pending or failed.
+- Downloaded archive is empty, incomplete, or corrupted.
+- Export link expires before download completes.
+- Customer receives a timeout or server error.
+- Some files or metadata are missing from the export.
+
+Troubleshooting steps
+- Confirm the customer has permission to export the project.
+- Check project size, file count, and unsupported file types.
+- Ask the customer to retry export using a stable network connection.
+- Check whether export jobs are queued or delayed due to high volume.
+- Verify that storage service links are valid and not expired.
+- Try exporting smaller sections if the project is very large.
+- Review export worker logs for job failure, timeout, or file access errors.
+
+Required information
+- Project ID or project name
+- Workspace ID
+- User email address
+- Export format requested
+- Approximate project size and file count
+- Error message or screenshot
+- Date and time of export attempt
+- Whether the export link was generated or not
+
+When to escalate
+- Escalate to Engineering if export jobs fail repeatedly or generate corrupted archives.
+- Escalate to Infrastructure if storage or background workers are degraded.
+- Escalate to Security if export permission appears incorrect.
+- Escalate to Enterprise Support for urgent compliance or legal export requests.
+
+Suggested customer response
+Sorry for the export trouble. Please try the export again and make sure you have export permission for the project. If the project is large, exporting smaller sections may help. If it still fails, please share the project name, export format, time of attempt, and any error message so we can check the export job logs.
+
+Source filename
+project_export_failure.txt

@@ -1,0 +1,46 @@
+Title
+Two-Factor Authentication Issues
+
+Category
+Account Access and Security
+
+Problem description
+A customer is unable to complete login because two-factor authentication code verification fails, authenticator app codes are unavailable, recovery codes are lost, SMS/email verification is delayed, or the customer changed devices.
+
+Symptoms
+- Customer cannot log in after entering password.
+- Authenticator app code is rejected.
+- SMS or email 2FA code does not arrive.
+- Customer lost phone or changed device.
+- Recovery codes are missing or already used.
+- Login page loops back to 2FA verification.
+
+Troubleshooting steps
+- Ask the customer to confirm device time is set automatically because authenticator apps require correct time sync.
+- Ask them to try the latest code and avoid reusing expired codes.
+- Check whether the account uses authenticator app, SMS, email, or SSO-based MFA.
+- Ask the customer to use recovery codes if available.
+- Confirm whether email/SMS delivery is delayed or blocked by spam filters or carrier restrictions.
+- Verify identity using approved account recovery procedures before disabling 2FA.
+- Never disable 2FA without required ownership checks.
+
+Required information
+- Account email address
+- Workspace or organization name
+- 2FA method used
+- Approximate time of login attempt
+- Error message screenshot
+- Whether recovery codes are available
+- Proof of account ownership according to internal policy
+
+When to escalate
+- Escalate to Security for 2FA reset requests where identity verification is unclear.
+- Escalate to Engineering if valid codes fail for multiple users.
+- Escalate to SSO/Admin team if 2FA is enforced by enterprise SSO policy.
+- Escalate to Support Lead for high-risk accounts, admin accounts, or suspected compromise.
+
+Suggested customer response
+I understand you are having trouble with two-factor authentication. Please make sure your device time is set to automatic and try a fresh code from your authenticator app. If you changed devices or no longer have access to your 2FA method, we will need to verify account ownership before making any security changes. Please share the account email, workspace name, and a screenshot of the error message.
+
+Source filename
+two_factor_authentication.txt

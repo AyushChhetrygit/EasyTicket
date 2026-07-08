@@ -1,0 +1,410 @@
+LangGraph Phase 1 Manual Learning Checklist
+===========================================
+
+Goal
+----
+Learn LangGraph from scratch by manually building the first ticket workflow.
+Do not try to make it perfect in one pass. Build one node, one edge, and one
+test at a time.
+
+
+0. Before you start
+-------------------
+
+[ ] Make sure all current tests pass.
+    Command:
+    .venv/bin/python -m pytest
+
+[ ] Read the existing service files before writing LangGraph code:
+    app/services/rag_search_service.py
+    app/services/response_generation_service.py
+    app/services/missing_information_service.py
+    app/services/sentiment_service.py
+    app/services/escalation_decision_service.py
+    app/services/escalation_packet_service.py
+
+[ ] Keep the current RAG services unchanged at first.
+
+Do:
+- Treat LangGraph as orchestration around services you already built.
+- Keep business logic inside existing services.
+- Use mock/local behavior first.
+
+Do not:
+- Rewrite RAG services inside LangGraph nodes.
+- Add database writes in the first LangGraph version.
+- Connect the UI yet.
+
+
+1. Add LangGraph dependency
+---------------------------
+
+[ ] Add LangGraph to requirements.txt.
+    Suggested:
+    langgraph>=0.2.0
+
+[ ] Install requirements locally.
+    Command:
+    .venv/bin/pip install -r requirements.txt
+
+[ ] Confirm import works.
+    Command:
+    .venv/bin/python -c "import langgraph; print('langgraph ok')"
+
+Do:
+- Add only LangGraph first.
+- Commit or checkpoint after dependency install works.
+
+Do not:
+- Add LangChain, vector DBs, tracing, or extra packages yet unless LangGraph requires them.
+
+
+2. Create the workflow file
+---------------------------
+
+[ ] Create:
+    app/workflows/langgraph_ticket_workflow.py
+
+[ ] Start with imports only.
+
+[ ] Add a short module docstring explaining that this is the LangGraph
+    orchestration layer for ticket analysis/RAG/escalation.
+
+Do:
+- Keep the file small and readable.
+- Import existing services, not duplicate their logic.
+
+Do not:
+- Put endpoint code in this file.
+- Put Streamlit/UI code in this file.
+
+
+3. Define TicketState
+---------------------
+
+[ ] Create TicketState.
+
+Recommended beginner version:
+
+    from typing import Any, TypedDict
+
+    class TicketState(TypedDict, total=False):
+        ticket: dict[str, Any]
+        classification: str
+        priority: str
+        customer_context: dict[str, Any]
+        retrieved_documents: list[dict[str, Any]]
+        draft_response: str
+        confidence: float
+        escalation_required: bool
+        escalation_packet: dict[str, Any]
+        errors: list[str]
+        missing_information: list[str]
+        final_action: str
+        retry_count: int
+        verification_passed: bool
+        verification_reason: str
+
+[ ] Keep values JSON-like at first.
+
+Do:
+- Use TypedDict while learning.
+- Keep state explicit.
+- Add fields only when a node needs them.
+
+Do not:
+- Use complex SQLModel objects inside state yet.
+- Make state too clever with nested custom classes.
+
+
+4. Create one node at a time
+----------------------------
+
+For every node:
+
+[ ] Write the function.
+[ ] Make it accept state.
+[ ] Make it return only updated fields.
+[ ] Add a simple test or manual command.
+[ ] Move to the next node only after it works.
+
+Node checklist:
+
+[ ] ticket_intake_node
+    Purpose:
+    Validate that ticket/message exists in state.
+    Add error if missing.
+
+[ ] classification_node
+    Purpose:
+    Use existing classification/rule service or simple category from state.
+    Store classification.
+
+[ ] priority_evaluation_node
+    Purpose:
+    Determine priority.
+    Store priority.
+
+[ ] customer_context_node
+    Purpose:
+    Add customer plan, status, previous tickets.
+    Start with mock customer_context from state.
+
+[ ] knowledge_retrieval_node
+    Purpose:
+    Call search_knowledge_base(ticket message).
+    Store retrieved_documents and confidence.
+
+[ ] response_generation_node
+    Purpose:
+    Call generate_rag_answer.
+    Store draft_response.
+
+[ ] verification_node
+    Purpose:
+    Check sources, confidence, missing info, and sensitive action risk.
+    Store verification_passed and verification_reason.
+
+[ ] decision_node
+    Purpose:
+    Call missing-information, sentiment, and escalation-decision services.
+    Store escalation_required, missing_information, final_action.
+
+[ ] reply_node
+    Purpose:
+    Final path when answer can be sent.
+
+[ ] ask_information_node
+    Purpose:
+    Final path when missing information is required.
+
+[ ] escalation_node
+    Purpose:
+    Generate escalation packet.
+
+[ ] human_approval_node
+    Purpose:
+    Final path for sensitive action or high-risk escalation.
+
+[ ] failure_node
+    Purpose:
+    Final path when workflow cannot safely answer.
+
+Do:
+- Print/log state while learning.
+- Keep each node under 20-30 lines if possible.
+- Return partial state updates, not the entire state.
+
+Do not:
+- Call every service from every node.
+- Hide failures silently.
+- Let nodes mutate global variables.
+
+
+5. Build the graph
+------------------
+
+[ ] Import StateGraph and END.
+
+Typical shape:
+
+    from langgraph.graph import END, StateGraph
+
+[ ] Create build_ticket_workflow().
+
+[ ] Add each node with graph.add_node(...).
+
+[ ] Set entry point:
+    ticket_intake_node
+
+[ ] Add normal edges first:
+    ticket_intake -> classification
+    classification -> priority_evaluation
+    priority_evaluation -> customer_context
+    customer_context -> knowledge_retrieval
+    knowledge_retrieval -> response_generation
+    response_generation -> verification
+    verification -> decision
+
+[ ] Compile the graph.
+
+Do:
+- Start with simple fixed edges.
+- Run the graph before adding conditional routing.
+
+Do not:
+- Add all conditional edges before simple flow works.
+
+
+6. Add conditional routing
+--------------------------
+
+[ ] Create a routing function after verification/decision.
+
+Rules to add:
+
+[ ] If errors exist, route to failure_node.
+[ ] If verification failed and retry_count is 0, route back to knowledge_retrieval_node.
+[ ] If verification failed and retry_count is 1, route to failure_node.
+[ ] If missing information exists, route to ask_information_node.
+[ ] If sensitive action exists, route to human_approval_node.
+[ ] If escalation_required is true, route to escalation_node.
+[ ] If confidence is high enough, route to reply_node.
+[ ] Otherwise route to failure_node.
+
+Suggested threshold:
+    confidence >= 0.65
+
+Do:
+- Keep routing functions pure.
+- Return route names as strings.
+- Test each route with a small state example.
+
+Do not:
+- Put long business logic in the router.
+- Let multiple routes fight each other. Decide priority order clearly.
+
+
+7. Add retry path
+-----------------
+
+[ ] Add retry_count to TicketState.
+
+[ ] In verification_node, if verification fails:
+    increment retry_count.
+
+[ ] Route retry_count == 0 or 1 carefully.
+
+Suggested beginner behavior:
+- First failure: retry retrieval/generation once.
+- Second failure: failure_node.
+
+Do:
+- Keep retry count visible in state.
+
+Do not:
+- Create infinite loops.
+- Retry more than once in phase 1.
+
+
+8. Add failure path
+-------------------
+
+[ ] failure_node should set:
+    final_action = "failure"
+    draft_response = safe fallback message
+
+Suggested fallback:
+    "I do not have enough verified information to answer this safely. A support agent should review this ticket."
+
+Do:
+- Fail safely.
+- Keep the customer reply polite.
+
+Do not:
+- Hallucinate an answer when retrieval fails.
+
+
+9. Add human approval node
+--------------------------
+
+[ ] human_approval_node should set:
+    final_action = "human_approval_required"
+
+[ ] It should preserve:
+    escalation_packet
+    draft_response
+    missing_information
+
+Do:
+- Use this for sensitive account deletion, cancellation, refund, security, and data-loss cases.
+
+Do not:
+- Auto-approve sensitive actions.
+
+
+10. Manual test examples
+------------------------
+
+[ ] Test normal answer:
+    "I paid for Pro but my subscription is still inactive."
+
+Expected:
+    source includes subscription_activation.txt
+    final action is reply or ask_information
+
+[ ] Test missing info:
+    "My invoice is wrong."
+
+Expected:
+    asks for missing billing information
+
+[ ] Test escalation:
+    "API returns 401 in production and we are blocked."
+
+Expected:
+    routes to escalation or human approval
+
+[ ] Test unsafe/unknown:
+    "How do I bake bread?"
+
+Expected:
+    failure or safe no-answer fallback
+
+
+11. Tests to add
+----------------
+
+[ ] Create:
+    tests/test_langgraph_ticket_workflow.py
+
+[ ] Test graph compiles.
+
+[ ] Test normal subscription ticket.
+
+[ ] Test missing information route.
+
+[ ] Test escalation route.
+
+[ ] Test failure route for unrelated query.
+
+[ ] Test retry does not loop forever.
+
+Do:
+- Test state outputs, not implementation details.
+
+Do not:
+- Mock everything. Use real local RAG services where possible.
+
+
+12. Final verification
+----------------------
+
+[ ] Run LangGraph tests:
+    .venv/bin/python -m pytest tests/test_langgraph_ticket_workflow.py -q
+
+[ ] Run full suite:
+    .venv/bin/python -m pytest
+
+[ ] Update docs/run_project_steps.txt if:
+    - dependency changed
+    - manual LangGraph command was added
+    - test count changed
+
+
+Learning reminders
+------------------
+
+Do:
+- Think of LangGraph as a workflow map.
+- Keep state boring and explicit.
+- Make each node easy to inspect.
+- Prefer deterministic local behavior while learning.
+- Add one edge at a time.
+
+Do not:
+- Treat LangGraph as magic.
+- Put all logic in one giant node.
+- Add live LLM calls in phase 1.
+- Add UI integration before the graph is tested.
+- Skip tests for routing decisions.

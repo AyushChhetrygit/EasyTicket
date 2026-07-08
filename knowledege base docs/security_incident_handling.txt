@@ -1,0 +1,46 @@
+Title
+Security Incident Handling
+
+Category
+Security and Trust
+
+Problem description
+A customer reports a suspected security issue such as unauthorized access, suspicious login, leaked API key, phishing, malware, data exposure, permission misuse, or vulnerability affecting their account or workspace.
+
+Symptoms
+- Customer reports suspicious login or unknown activity.
+- API keys, tokens, or passwords may be exposed.
+- Audit logs show unusual actions.
+- User receives unexpected password reset or 2FA prompts.
+- Data may have been viewed, changed, exported, or deleted by an unauthorized party.
+- Customer reports vulnerability or security weakness.
+
+Troubleshooting steps
+- Treat all security incident reports as sensitive and time-critical.
+- Collect facts without asking the customer to reveal passwords, full secrets, or private keys.
+- Advise immediate rotation of exposed API keys, tokens, and passwords.
+- Ask customer to enable or review 2FA and active sessions.
+- Preserve logs, timestamps, IPs, and affected resources.
+- Check audit logs for suspicious activity.
+- Follow internal incident severity classification and response workflow.
+
+Required information
+- Account email and workspace ID
+- Description of suspected incident
+- Date and time first noticed
+- Affected users, projects, or resources
+- Relevant audit log entries or screenshots
+- Whether credentials, tokens, or API keys were exposed
+- Business impact and whether data was accessed or changed
+
+When to escalate
+- Escalate immediately to Security team for suspected compromise, data exposure, or vulnerability reports.
+- Escalate to Engineering if a product vulnerability or access-control bug is suspected.
+- Escalate to Legal/Privacy if customer data exposure may have occurred.
+- Escalate to Incident Commander for high-severity or multi-customer incidents.
+
+Suggested customer response
+Thank you for reporting this. We take security concerns seriously and will investigate. Please do not send passwords or full secret keys. If any API keys or tokens may be exposed, rotate them immediately. Share the affected workspace, timeline, suspicious activity details, and screenshots or audit logs so our security team can review the incident.
+
+Source filename
+security_incident_handling.txt

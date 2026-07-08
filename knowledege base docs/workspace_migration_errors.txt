@@ -1,0 +1,46 @@
+Title: Workspace Migration Errors
+Category: Workspace Management
+
+Problem description:
+Customers may experience errors while migrating a workspace between organizations, regions, plans, tenants, or accounts. Migration issues can affect users, permissions, files, integrations, billing, and workspace availability.
+
+Symptoms:
+- Migration fails or remains stuck in progress.
+- Workspace data is partially migrated.
+- Users or roles are missing after migration.
+- Integrations stop working after migration.
+- Files, projects, or settings are missing.
+- Customer sees migration error messages or permission errors.
+- Workspace appears under the wrong organization after migration.
+
+Troubleshooting steps:
+1. Confirm the source and destination workspace details.
+2. Ask when the migration was started and who initiated it.
+3. Confirm whether the migration is user-initiated, admin-initiated, or support-assisted.
+4. Ask whether any users, integrations, billing settings, or files are missing.
+5. Ask the customer not to retry migration repeatedly until support checks the status.
+6. Collect screenshots or error messages.
+7. Check whether the destination organization has enough permissions, seats, storage, and plan access.
+8. Escalate if data appears missing or migration is stuck.
+
+Required information:
+- Source workspace name and ID.
+- Destination workspace or organization name and ID.
+- Admin email address.
+- Migration start time.
+- Current migration status.
+- Error message or screenshot.
+- List of missing users, files, projects, or integrations.
+- Whether the issue affects all users or selected users.
+
+When to escalate:
+- Migration is stuck for longer than expected.
+- Data loss or partial migration is reported.
+- Permissions, billing, or enterprise settings are affected.
+- Customer cannot access the workspace after migration.
+- Workspace is business-critical or enterprise-owned.
+
+Suggested customer response:
+Hi, I can help investigate the workspace migration issue. Please share the source and destination workspace names or IDs, the admin email, the time the migration started, and any error message you see. If any users, files, projects, or integrations are missing, please list them. Avoid retrying the migration until we confirm the current status, so we do not create duplicate or partial migration records.
+
+Source filename: workspace_migration_errors.txt
