@@ -166,7 +166,7 @@ EasyTicket: Steps to Run the Project So Far
 
    Current expected result:
 
-   86 passed
+   90 passed
 
 14. Useful development commands
 
@@ -181,6 +181,10 @@ EasyTicket: Steps to Run the Project So Far
    Run only RAG-related tests:
 
    .venv/bin/python -m pytest tests/test_embedding_service.py tests/test_rag_search_service.py tests/test_response_generation_service.py tests/test_escalation_decision_service.py tests/test_missing_information_service.py tests/test_sentiment_service.py tests/test_escalation_packet_schemas.py tests/test_note_generation_services.py tests/test_text_normalization_service.py
+
+   Run LangGraph workflow tests:
+
+   .venv/bin/python -m pytest tests/test_langgraph_ticket_workflow.py -q
 
    Run schema demo:
 
@@ -237,3 +241,28 @@ EasyTicket: Steps to Run the Project So Far
    Routing should classify the login message as account-related.
    Sentiment should show urgency for asap/production/blocked.
    RAG sources should include subscription_activation.txt for the messy subscription message.
+
+18. Manual LangGraph workflow check
+
+   LangGraph is currently available as a backend workflow module, not yet as a FastAPI or Streamlit UI button.
+
+   Run this from the project root:
+
+   .venv/bin/python -c 'from app.workflows.langgraph_ticket_workflow import build_ticket_workflow; import json; workflow=build_ticket_workflow(); result=workflow.invoke({"ticket":{"ticket_id":"TKT-LG-MANUAL","customer_id":"CUST-1001","message":"I paid for Pro but my subscription is still inactive."},"customer_context":{"customer_id":"CUST-1001","name":"Demo Customer","plan":"pro","previous_tickets":0}}); print(json.dumps({"final_action":result.get("final_action"),"classification":result.get("classification"),"priority":result.get("priority"),"confidence":result.get("confidence"),"sources":[doc.get("source") for doc in result.get("retrieved_documents",[])],"missing_information":result.get("missing_information"),"draft_response":result.get("draft_response")}, indent=2))'
+
+   Expected manual signals:
+
+   final_action should usually be ask_information for incomplete billing tickets.
+   classification should be billing.
+   sources should include subscription_activation.txt.
+   draft_response should ask for missing details.
+
+   Try a high-risk security flow:
+
+   .venv/bin/python -c 'from app.workflows.langgraph_ticket_workflow import build_ticket_workflow; import json; workflow=build_ticket_workflow(); result=workflow.invoke({"ticket":{"ticket_id":"TKT-LG-SEC","customer_id":"CUST-ENT","message":"Security breach in production with API 401 for workspace WS-123 in Chrome after I rotate credentials."},"customer_context":{"customer_id":"CUST-ENT","name":"Enterprise User","plan":"enterprise","previous_tickets":3}}); print(json.dumps({"final_action":result.get("final_action"),"escalation_required":result.get("escalation_required"),"recommended_team":(result.get("escalation_packet") or {}).get("recommended_team"),"sources":[doc.get("source") for doc in result.get("retrieved_documents",[])]}, indent=2))'
+
+   Expected manual signals:
+
+   final_action should be human_approval_required.
+   escalation_required should be true.
+   recommended_team should be engineering.
